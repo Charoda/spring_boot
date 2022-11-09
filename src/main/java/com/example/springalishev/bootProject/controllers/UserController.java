@@ -30,7 +30,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String showById(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.findOne(id));
+        model.addAttribute("user", userService.show(id));
         return "/show";
     }
 
@@ -49,14 +49,14 @@ public class UserController {
 
     @GetMapping("/people/list")
     public String getListUser(Model model) {
-        List<User> userList = userService.findAll();
+        List<User> userList = userService.index();
         model.addAttribute("userList",userList);
         return "/list";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user",userService.findOne(id));
+        model.addAttribute("user",userService.show(id));
         return "/edit";
     }
 

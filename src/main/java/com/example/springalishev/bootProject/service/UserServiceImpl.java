@@ -1,50 +1,48 @@
 package com.example.springalishev.bootProject.service;
 
 
+import com.example.springalishev.bootProject.dao.UserDao;
 import com.example.springalishev.bootProject.models.User;
-import com.example.springalishev.bootProject.reposirories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
-public class UserServiceImpl  {
+public class UserServiceImpl implements UserService  {
 
-
-    private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserDao userDao;
+
+
+    @Override
+    public List<User> index() {
+        return userDao.index();
     }
 
-
-    public List<User> findAll() {
-        return userRepository.findAll();
+    @Override
+    public User show(int id) {
+        return userDao.show(id);
     }
 
-    public User findOne(int id) {
-        Optional<User> foundUser = userRepository.findById(id);
-        return foundUser.orElse(null);
-    }
-
-
+    @Override
+    @Transactional
     public void save(User user) {
-        userRepository.save(user);
+        userDao.save(user);
     }
 
-
-    public void update(int id,User updatedUser) {
-        updatedUser.setId(id);
-        userRepository.save(updatedUser);
+    @Override
+    @Transactional
+    public void update(int id, User user) {
+        userDao.update(id,user);
     }
 
-    public void delete(int id ) {
-        userRepository.deleteById(id);
+    @Override
+    @Transactional
+    public void delete(int id) {
+        userDao.delete(id);
     }
-
 }
